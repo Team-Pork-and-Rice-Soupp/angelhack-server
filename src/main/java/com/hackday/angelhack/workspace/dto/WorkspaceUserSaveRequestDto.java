@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class MemberSaveRequestDto {
+public class WorkspaceUserSaveRequestDto {
 
     private String email;
     private String description;
     private PROJECT_ROLE role;
 
     @Builder
-    public MemberSaveRequestDto(String email, String description, PROJECT_ROLE role) {
+    public WorkspaceUserSaveRequestDto(String email, String description, PROJECT_ROLE role) {
         this.email = email;
         this.description = description;
         this.role = role;

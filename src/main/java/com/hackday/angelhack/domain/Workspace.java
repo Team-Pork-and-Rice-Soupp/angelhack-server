@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,16 +20,17 @@ public class Workspace extends BaseTimeEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
-
     private String title;
 
     private String description;
 
+    @OneToMany(mappedBy = "workspace", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<WorkspaceUser> workspaceUsers = new ArrayList<>();
+
     @Builder
-    public Workspace(Long userId, String title, String description) {
-        this.userId = userId;
+    public Workspace(String title, String description, List<WorkspaceUser> workspaceUsers) {
         this.title = title;
         this.description = description;
+        this.workspaceUsers = workspaceUsers;
     }
 }
