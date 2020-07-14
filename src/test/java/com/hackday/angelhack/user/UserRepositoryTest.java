@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 @SpringBootTest
@@ -25,6 +27,13 @@ public class UserRepositoryTest {
     public void getUserTest() {
         UserAuth mockUserAuth = userRepository.findByEmail("hahava@naer.com");
         assertEquals(mockUserAuth.getRole(), ROLE.PROJECT_MANAGER);
+    }
+
+    @Test
+    public void findAllByEmailStartingWithTest(){
+        List<UserAuth> userAuths = userRepository.findAllByEmailStartingWith("haha");
+        UserAuth userAuth = userAuths.get(0);
+        assertEquals(userAuth.getEmail(), "hahava@naver.com");
     }
 
 }
