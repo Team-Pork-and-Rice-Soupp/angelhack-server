@@ -21,6 +21,7 @@ public class UserAuth {
     private String email;
 
     @ApiParam(value = "사용자의 패스워드", required = true)
+    @JsonIgnore
     private String pw;
 
     @ApiParam(hidden = true)
