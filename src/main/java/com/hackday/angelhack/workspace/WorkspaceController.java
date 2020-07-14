@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -16,10 +18,12 @@ public class WorkspaceController {
     private final WorkspaceService workspaceService;
 
     @GetMapping("/{userId}")
-    public ResponseEntity getWorkspaces(@PathVariable Long userId) {
+    public ResponseEntity<Map<String, List<Workspace>>> getWorkspaces(@PathVariable Long userId) {
 
         List<Workspace> workspaces = workspaceService.findAllByUserId(userId);
-        return new ResponseEntity(workspaces, HttpStatus.OK);
+        Map<String, List<Workspace>> resposne = new LinkedHashMap<>();
+        resposne.put("workspaceList", workspaces);
+        return new ResponseEntity<>(resposne, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}/{workspaceId}")

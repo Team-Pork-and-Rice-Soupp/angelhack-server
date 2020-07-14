@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "workspaces")
+@Table(name = "workspace")
 public class Workspace extends BaseTimeEntity{
 
     @Id
