@@ -38,7 +38,8 @@ public class SwaggerConfig {
                         "토큰을 생성하는 방법은 2가지 입니다. \n" +
                         "1. 로그인을 직접 수행 \n" +
                         "2. 제공되는 슈퍼 토큰을 사용 \n\n " +
-                        "생성된 토큰은 우측에 Authorize에 등록하여 사용할 수 있습니다.")
+                        "생성된 토큰은 우측에 Authorize에 등록하여 사용할 수 있습니다.\n\n" +
+                        "슈퍼토큰 : `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb290IiwiZXhwIjoyNDU4NjUyNDAwfQ.OYUx7HqlC1LZo8Dnx5PH9MlO-4IAce5CJ4__KCOOOEZXpUwSmHUgGR3b8E30obVYR8gz875GmhiGgP6wpsz0Vw`")
                 .contact(getContact())
                 .build();
     }
