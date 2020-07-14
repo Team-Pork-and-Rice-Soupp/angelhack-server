@@ -2,6 +2,7 @@ package com.hackday.angelhack.user;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.hackday.angelhack.security.SecurityConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +28,17 @@ public class UserAuthController {
     public ResponseEntity<String> doLogin(@RequestBody UserAuth userAuth) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userAuth.getEmail(), userAuth.getPw());
         Authentication authentication = authenticationManager.authenticate(token);
-        if (authentication.isAuthenticated()) {
-            String jwt = JWT.create().withSubject(authentication.getName()).withExpiresAt(Date.valueOf(LocalDate.now().plusDays(2))).sign(Algorithm.HMAC512("secret"));
-            return new ResponseEntity<>("token"+jwt, HttpStatus.OK);
+
+        if (authentication.isAuthenticated() == false) {
+            return new ResponseEntity<>("email or password invalid", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("hello", HttpStatus.OK);
+
+        final String jwt = JWT
+                .create()
+                .withSubject(authentication.getName())
+                .withExpiresAt(Date.valueOf(LocalDate.now().plusDays(2)))
+                .sign(Algorithm.HMAC512(SecurityConst.SECRET_KEY));
+
+        return new ResponseEntity<>(SecurityConst.TOKEN_PREFIX + jwt, HttpStatus.OK);
     }
 }

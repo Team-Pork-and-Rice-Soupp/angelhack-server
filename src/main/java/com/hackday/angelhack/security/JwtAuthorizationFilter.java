@@ -28,16 +28,18 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String token = request.getHeader("token");
+        String token = request.getHeader(SecurityConst.HEADER_STRING);
 
         if (token == null) {
             chain.doFilter(request, response);
             return;
         }
 
-        String email = JWT.require(Algorithm.HMAC512("secret")).build().verify(token.replace("token", "")).getSubject();
-
-        System.out.println(email);
+        String email = JWT
+                .require(Algorithm.HMAC512(SecurityConst.SECRET_KEY))
+                .build()
+                .verify(token.replace(SecurityConst.TOKEN_PREFIX, ""))
+                .getSubject();
 
         if (email != null) {
             UserAuth userAuth = userRepository.findByEmail(email);
