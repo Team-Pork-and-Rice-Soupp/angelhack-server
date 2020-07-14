@@ -1,18 +1,25 @@
-package com.hackday.angelhack.controller;
+package com.hackday.angelhack.workspace;
 
-import io.swagger.annotations.ApiOperation;
+import com.hackday.angelhack.domain.Workspace;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/workspace")
 public class WorkspaceController {
 
+    private final WorkspaceService workspaceService;
+
     @GetMapping("/{userId}")
-    public ResponseEntity getWorkspaces(@PathVariable int userId) {
-        return new ResponseEntity(userId, HttpStatus.OK);
+    public ResponseEntity getWorkspaces(@PathVariable Long userId) {
+
+        List<Workspace> workspaces = workspaceService.findAllByUserId(userId);
+        return new ResponseEntity(workspaces, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}/{workspaceId}")
