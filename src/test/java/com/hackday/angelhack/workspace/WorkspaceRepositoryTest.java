@@ -15,18 +15,4 @@ public class WorkspaceRepositoryTest {
     @Autowired
     WorkspaceRepository workspaceRepository;
 
-    @Test
-    public void findAllByUserId() {
-
-        Workspace workspace = Workspace.builder()
-                .userId(1L)
-                .title("테스트1")
-                .description("테스트 설명 1")
-                .build();
-
-        workspaceRepository.save(workspace);
-
-        List<Workspace> workspaces = workspaceRepository.findAllByUserId(1L);
-        assertEquals(workspaces.get(0).getTitle(), "테스트1");
-    }
 }

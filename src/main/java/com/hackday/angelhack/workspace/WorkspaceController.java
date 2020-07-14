@@ -22,10 +22,18 @@ public class WorkspaceController {
 
     private final WorkspaceService workspaceService;
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<Map<String, List<Workspace>>> getWorkspaces(@PathVariable Long userId) {
+    @GetMapping()
+    public ResponseEntity<Map<String, List<Workspace>>> getWorkspaces(HttpServletRequest request) {
 
-        List<Workspace> workspaces = workspaceService.findAllByUserId(userId);
+        String token = request.getHeader(SecurityConst.HEADER_STRING);
+        String email = JWT
+                .require(Algorithm.HMAC512(SecurityConst.SECRET_KEY))
+                .build()
+                .verify(token.replace(SecurityConst.TOKEN_PREFIX, ""))
+                .getSubject();
+
+        System.out.println(email);
+        List<Workspace> workspaces = workspaceService.findAllByUserId(email);
         Map<String, List<Workspace>> resposne = new LinkedHashMap<>();
         resposne.put("workspaceList", workspaces);
         return new ResponseEntity<>(resposne, HttpStatus.OK);

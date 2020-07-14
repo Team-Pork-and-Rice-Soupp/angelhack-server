@@ -19,8 +19,18 @@ public class WorkspaceService {
     private final WorkspaceRepository workspaceRepository;
     private final UserRepository userRepository;
 
-    public List<Workspace> findAllByUserId(Long userId){
-        return null;
+    public List<Workspace> findAllByUserId(String email) {
+        Iterable<Workspace> workspaces = workspaceRepository.findAll();
+        UserAuth user = userRepository.findByEmail(email);
+        List<Workspace> result = new ArrayList<>();
+        for(Workspace workspace : workspaces){
+            for(WorkspaceUser workspaceUser : workspace.getWorkspaceUsers()){
+                if(workspaceUser.getId().equals(user.getId())){
+                    result.add(workspace);
+                }
+            }
+        }
+        return result;
     }
 
     public Long save(WorkspaceSaveRequestDto requestDto){
