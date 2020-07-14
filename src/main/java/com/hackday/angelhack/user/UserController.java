@@ -1,4 +1,4 @@
-package com.hackday.angelhack.controller;
+package com.hackday.angelhack.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
