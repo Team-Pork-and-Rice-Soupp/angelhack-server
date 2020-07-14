@@ -3,6 +3,7 @@ package com.hackday.angelhack.user;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.hackday.angelhack.security.SecurityConst;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +25,7 @@ public class UserAuthController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public ResponseEntity<String> doLogin(@RequestBody UserAuth userAuth) {
+    public ResponseEntity<String> doLogin(UserAuth userAuth) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userAuth.getEmail(), userAuth.getPw());
         Authentication authentication = authenticationManager.authenticate(token);
 
