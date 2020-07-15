@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
@@ -24,12 +23,10 @@ public class WorkspaceSaveRequestDto {
     }
 
     public Workspace toEntity() {
-        return Workspace.builder()
-                .title(this.title)
-                .description(this.description)
-                .workspaceUsers(this.members.stream()
-                        .map(WorkspaceUserSaveRequestDto::toEntity)
-                        .collect(Collectors.toList()))
-                .build();
+        Workspace workspace = new Workspace();
+        workspace.setDescription(description);
+        workspace.setTitle(title);
+
+        return workspace;
     }
 }

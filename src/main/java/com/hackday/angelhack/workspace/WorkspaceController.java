@@ -32,7 +32,6 @@ public class WorkspaceController {
                 .verify(token.replace(SecurityConst.TOKEN_PREFIX, ""))
                 .getSubject();
 
-        System.out.println(email);
         List<Workspace> workspaces = workspaceService.findAllByUserId(email);
         Map<String, List<Workspace>> resposne = new LinkedHashMap<>();
         resposne.put("workspaceList", workspaces);
@@ -47,7 +46,7 @@ public class WorkspaceController {
     @PostMapping()
     public ResponseEntity<String> save(@RequestBody WorkspaceSaveRequestDto requestDto) {
         Long result = workspaceService.save(requestDto);
-        if(result == null){
+        if (result == null) {
             return new ResponseEntity<>("Failed to create workspace", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("Success", HttpStatus.CREATED);
