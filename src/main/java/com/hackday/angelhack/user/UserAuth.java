@@ -17,6 +17,7 @@ import java.util.List;
 public class UserAuth {
     @Id
     @ApiParam(hidden = true)
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

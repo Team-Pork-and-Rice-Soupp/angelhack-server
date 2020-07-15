@@ -1,6 +1,8 @@
 package com.hackday.angelhack.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hackday.angelhack.user.UserAuth;
+import io.swagger.annotations.ApiParam;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,10 +15,12 @@ import javax.persistence.*;
 public class WorkspaceUser {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "workspace_id")
     private Workspace workspace;
 
