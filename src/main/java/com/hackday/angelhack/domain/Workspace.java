@@ -24,8 +24,8 @@ public class Workspace extends BaseTimeEntity{
 
     private String description;
 
-    @OneToMany(mappedBy = "workspace", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private List<WorkspaceUser> workspaceUsers = new ArrayList<>();
+    @OneToMany(mappedBy = "workspace", fetch = FetchType.EAGER)
+    private List<WorkspaceUser> workspaceUsers;
 
     @Builder
     public Workspace(String title, String description, List<WorkspaceUser> workspaceUsers) {

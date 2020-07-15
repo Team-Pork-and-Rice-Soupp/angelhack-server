@@ -34,5 +34,5 @@ public class UserAuth {
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private List<WorkspaceUser> workspaceUsers = new  ArrayList<>();
+    private List<WorkspaceUser> workspaceUsers;
 }

@@ -4,11 +4,13 @@ import com.hackday.angelhack.user.UserAuth;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
+@Setter
 @NoArgsConstructor
 @Table(name = "workspace_user")
 public class WorkspaceUser {
@@ -22,7 +24,7 @@ public class WorkspaceUser {
     private Workspace workspace;
 
     @ManyToOne
-    @JoinColumn(name="user_auth_email", referencedColumnName = "email")
+    @JoinColumn(name="USER_AUTH_email")
     private UserAuth user;
 
     private String description;
