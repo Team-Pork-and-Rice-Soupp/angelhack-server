@@ -1,7 +1,10 @@
 package com.hackday.angelhack.workspace;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.hackday.angelhack.domain.Workspace;
 import com.hackday.angelhack.domain.WorkspaceUser;
+import com.hackday.angelhack.security.SecurityConst;
 import com.hackday.angelhack.user.UserAuth;
 import com.hackday.angelhack.user.UserRepository;
 import com.hackday.angelhack.workspace.dto.WorkspaceSaveRequestDto;
@@ -10,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +25,9 @@ public class WorkspaceService {
     private final UserRepository userRepository;
     private final WorkspaceUserRepository workspaceUserRepository;
 
-    public List<Workspace> findAllByUserId(String email) {
+    public List<Workspace> findAllByUserId(HttpServletRequest request) {
+        String email = decodeJWT(request);
+
         Iterable<Workspace> workspaces = workspaceRepository.findAll();
         UserAuth user = userRepository.findByEmail(email);
         List<Workspace> result = new ArrayList<>();
@@ -48,5 +54,15 @@ public class WorkspaceService {
         }
 
         return workspace.getId();
+    }
+
+    private String decodeJWT(HttpServletRequest request){
+        String token = request.getHeader(SecurityConst.HEADER_STRING);
+
+        return JWT
+                .require(Algorithm.HMAC512(SecurityConst.SECRET_KEY))
+                .build()
+                .verify(token.replace(SecurityConst.TOKEN_PREFIX, ""))
+                .getSubject();
     }
 }

@@ -24,15 +24,7 @@ public class WorkspaceController {
 
     @GetMapping()
     public ResponseEntity<Map<String, List<Workspace>>> getWorkspaces(HttpServletRequest request) {
-
-        String token = request.getHeader(SecurityConst.HEADER_STRING);
-        String email = JWT
-                .require(Algorithm.HMAC512(SecurityConst.SECRET_KEY))
-                .build()
-                .verify(token.replace(SecurityConst.TOKEN_PREFIX, ""))
-                .getSubject();
-
-        List<Workspace> workspaces = workspaceService.findAllByUserId(email);
+        List<Workspace> workspaces = workspaceService.findAllByUserId(request);
         Map<String, List<Workspace>> resposne = new LinkedHashMap<>();
         resposne.put("workspaceList", workspaces);
         return new ResponseEntity<>(resposne, HttpStatus.OK);
