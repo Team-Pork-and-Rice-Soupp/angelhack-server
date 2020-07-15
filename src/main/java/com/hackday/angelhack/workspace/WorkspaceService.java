@@ -2,6 +2,7 @@ package com.hackday.angelhack.workspace;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.hackday.angelhack.domain.PROJECT_ROLE;
 import com.hackday.angelhack.domain.Workspace;
 import com.hackday.angelhack.domain.WorkspaceUser;
 import com.hackday.angelhack.security.SecurityConst;
@@ -74,6 +75,30 @@ public class WorkspaceService {
         }
 
         return workspace;
+    }
+
+    @Transactional
+    public Long deleteById(HttpServletRequest request, Long workspaceId){
+        String email = decodeJWT(request);
+        UserAuth user = userRepository.findByEmail(email);
+        List<WorkspaceUser> members = workspaceUserRepository.findAllByUser(user);
+        WorkspaceUser member = null;
+
+        for(WorkspaceUser workspaceUser : members){
+            if(workspaceUser.getWorkspace().getId().equals(workspaceId)){
+                member = workspaceUser;
+                break;
+            }
+        }
+
+
+        if(member == null || !member.getRole().equals(PROJECT_ROLE.MANAGER)){
+            return 0L;
+        }
+
+        workspaceRepository.deleteById(workspaceId);
+
+        return workspaceId;
     }
 
     private String decodeJWT(HttpServletRequest request){

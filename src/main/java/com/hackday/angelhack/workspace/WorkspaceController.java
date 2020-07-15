@@ -54,8 +54,14 @@ public class WorkspaceController {
     }
 
     @DeleteMapping("/{workspaceId}")
-    public ResponseEntity delete(@PathVariable int workspaceId) {
-        return new ResponseEntity(null, HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> delete(HttpServletRequest request, @PathVariable Long workspaceId) {
+        Long result = workspaceService.deleteById(request, workspaceId);
+
+        if(result == 0L){
+            return new ResponseEntity<>("User와 WorkspaceId가 유효하지 않습니다.", HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
 }
