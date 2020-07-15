@@ -1,11 +1,14 @@
 package com.hackday.angelhack.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hackday.angelhack.domain.WorkspaceUser;
 import io.swagger.annotations.ApiParam;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,6 +17,7 @@ import javax.persistence.*;
 public class UserAuth {
     @Id
     @ApiParam(hidden = true)
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -28,4 +32,8 @@ public class UserAuth {
     @JsonIgnore
     @Enumerated(EnumType.STRING)
     private ROLE role;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<WorkspaceUser> workspaceUsers;
 }

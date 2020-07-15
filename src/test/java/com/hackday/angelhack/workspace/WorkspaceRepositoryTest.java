@@ -1,32 +1,56 @@
 package com.hackday.angelhack.workspace;
 
+import com.hackday.angelhack.domain.PROJECT_ROLE;
 import com.hackday.angelhack.domain.Workspace;
-import org.junit.Test;
+import com.hackday.angelhack.domain.WorkspaceUser;
+import com.hackday.angelhack.user.UserAuth;
+import com.hackday.angelhack.user.UserRepository;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 public class WorkspaceRepositoryTest {
 
     @Autowired
-    WorkspaceRepository workspaceRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private WorkspaceRepository workspaceRepository;
+
+    @Autowired
+    private WorkspaceUserRepository workspaceUserRepository;
 
     @Test
-    public void findAllByUserId() {
+    public void addWorkSpaceTest() {
+        UserAuth userOne = userRepository.findByEmail("hahava1@naver.com");
+        UserAuth userTwo = userRepository.findByEmail("hahava@naver.com");
 
-        Workspace workspace = Workspace.builder()
-                .userId(1L)
-                .title("테스트1")
-                .description("테스트 설명 1")
-                .build();
-
+        Workspace workspace = new Workspace();
+        workspace.setTitle("hello workspace title");
+        workspace.setDescription("hello workspace description");
         workspaceRepository.save(workspace);
 
-        List<Workspace> workspaces = workspaceRepository.findAllByUserId(1L);
-        assertEquals(workspaces.get(0).getTitle(), "테스트1");
+        WorkspaceUser workspaceUser = new WorkspaceUser();
+        workspaceUser.setUser(userOne);
+        workspaceUser.setDescription("hello workspace user description");
+        workspaceUser.setRole(PROJECT_ROLE.CREW);
+        workspaceUser.setWorkspace(workspace);
+        workspaceUserRepository.save(workspaceUser);
+
+        WorkspaceUser workspaceUser2 = new WorkspaceUser();
+        workspaceUser2.setUser(userTwo);
+        workspaceUser2.setDescription("hello workspace user2 description");
+        workspaceUser2.setRole(PROJECT_ROLE.MANAGER);
+        workspaceUser2.setWorkspace(workspace);
+        workspaceUserRepository.save(workspaceUser2);
     }
+
+    @Test
+    public void getUserByWorkspaceTest() {
+        Workspace workspace = workspaceRepository.findById(1L).get();
+        System.out.println(workspace.getWorkspaceUsers().get(0).getUser().getEmail());
+        System.out.println(workspace.getWorkspaceUsers().get(1).getUser().getEmail());
+    }
+
 }

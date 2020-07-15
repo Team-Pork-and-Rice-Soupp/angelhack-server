@@ -1,33 +1,30 @@
 package com.hackday.angelhack.domain;
 
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
-@Table(name = "workspaces")
-public class Workspace extends BaseTimeEntity{
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Table(name = "workspace")
+public class Workspace extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
-
     private String title;
 
     private String description;
 
-    @Builder
-    public Workspace(Long userId, String title, String description) {
-        this.userId = userId;
-        this.title = title;
-        this.description = description;
-    }
+    @OneToMany(mappedBy = "workspace", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<WorkspaceUser> workspaceUsers;
 }
