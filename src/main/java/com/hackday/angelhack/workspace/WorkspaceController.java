@@ -30,9 +30,18 @@ public class WorkspaceController {
         return new ResponseEntity<>(resposne, HttpStatus.OK);
     }
 
-    @GetMapping("/{userId}/{workspaceId}")
-    public ResponseEntity getWorkspace(@PathVariable int userId, @PathVariable int workspaceId) {
-        return new ResponseEntity("Success", HttpStatus.OK);
+    @GetMapping("/{workspaceId}")
+    public ResponseEntity<Workspace> getWorkspace(HttpServletRequest request, @PathVariable Long workspaceId) {
+        Workspace workspace;
+
+        try {
+            workspace = workspaceService.getWorkspaceInfoByWorkspaceId(request, workspaceId);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return new ResponseEntity("", HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(workspace, HttpStatus.OK);
     }
 
     @PostMapping()

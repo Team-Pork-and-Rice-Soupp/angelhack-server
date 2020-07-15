@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -54,6 +55,25 @@ public class WorkspaceService {
         }
 
         return workspace.getId();
+    }
+
+    public Workspace getWorkspaceInfoByWorkspaceId(HttpServletRequest request, Long workspaceId) throws NullPointerException{
+        String email = decodeJWT(request);
+        Optional<Workspace> optional = workspaceRepository.findById(workspaceId);
+        Workspace workspace = optional.orElseThrow(NullPointerException::new);
+
+        boolean flag = false;
+        for(WorkspaceUser member : workspace.getWorkspaceUsers()){
+            if(member.getUser().getEmail().equals(email)){
+                flag = true;
+            }
+        }
+
+        if(!flag){
+            throw new NullPointerException();
+        }
+
+        return workspace;
     }
 
     private String decodeJWT(HttpServletRequest request){
