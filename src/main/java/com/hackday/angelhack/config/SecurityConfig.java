@@ -36,7 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/**").hasAnyAuthority(SecurityRole.ADMIN.name(), SecurityRole.USER.name(), SecurityRole.PROJECT_MANAGER.name());
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(new CorsFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository)).httpBasic().disable().cors();
 
         // only for dev profile
