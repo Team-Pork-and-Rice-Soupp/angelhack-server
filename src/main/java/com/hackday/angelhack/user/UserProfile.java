@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
+import static com.hackday.angelhack.user.ROLE.USER;
+
 @Getter
 @Setter
 @Entity
@@ -33,4 +35,14 @@ public class UserProfile {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<WorkspaceUser> workspaceUsers;
+
+    public static UserProfile of(UserAuthDTO userAuthDTO) {
+        UserProfile userProfile = new UserProfile();
+        userProfile.setEmail(userAuthDTO.getEmail());
+        userProfile.setName(userAuthDTO.getName());
+        userProfile.setPw(userAuthDTO.getPw());
+        userProfile.setRole(USER);
+        return userProfile;
+    }
+
 }
