@@ -3,7 +3,7 @@ package com.hackday.angelhack.workspace;
 import com.hackday.angelhack.domain.PROJECT_ROLE;
 import com.hackday.angelhack.domain.Workspace;
 import com.hackday.angelhack.domain.WorkspaceUser;
-import com.hackday.angelhack.user.UserAuth;
+import com.hackday.angelhack.user.UserProfile;
 import com.hackday.angelhack.user.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ public class WorkspaceRepositoryTest {
 
     @Test
     public void addWorkSpaceTest() {
-        UserAuth userOne = userRepository.findByEmail("hahava1@naver.com");
-        UserAuth userTwo = userRepository.findByEmail("hahava@naver.com");
+        UserProfile userOne = userRepository.findByEmail("hahava1@naver.com");
+        UserProfile userTwo = userRepository.findByEmail("hahava@naver.com");
 
         Workspace workspace = new Workspace();
         workspace.setTitle("hello workspace title");

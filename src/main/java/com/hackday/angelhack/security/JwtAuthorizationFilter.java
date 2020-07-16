@@ -3,11 +3,10 @@ package com.hackday.angelhack.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.hackday.angelhack.user.ROLE;
-import com.hackday.angelhack.user.UserAuth;
+import com.hackday.angelhack.user.UserProfile;
 import com.hackday.angelhack.user.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.rsocket.RSocketSecurity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -53,8 +52,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
 
         if (email != null) {
-            UserAuth userAuth = userRepository.findByEmail(email);
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userAuth.getEmail(), userAuth.getPw(), Set.of(new SimpleGrantedAuthority(userAuth.getRole().name())));
+            UserProfile userProfile = userRepository.findByEmail(email);
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userProfile.getEmail(), userProfile.getPw(), Set.of(new SimpleGrantedAuthority(userProfile.getRole().name())));
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
 

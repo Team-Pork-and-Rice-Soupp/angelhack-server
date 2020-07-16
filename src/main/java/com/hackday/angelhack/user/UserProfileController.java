@@ -3,7 +3,6 @@ package com.hackday.angelhack.user;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.hackday.angelhack.security.SecurityConst;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +18,14 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/auth")
-public class UserAuthController {
+public class UserProfileController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public ResponseEntity<String> doLogin(UserAuth userAuth) {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userAuth.getEmail(), userAuth.getPw());
+    public ResponseEntity<String> doLogin(UserProfile userProfile) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userProfile.getEmail(), userProfile.getPw());
         Authentication authentication = authenticationManager.authenticate(token);
 
         if (authentication.isAuthenticated() == false) {

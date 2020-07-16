@@ -16,24 +16,24 @@ public class UserRepositoryTest {
 
     @Test
     public void userSaveTest() {
-        UserAuth userAuth = new UserAuth();
-        userAuth.setEmail("hahava@naver.com");
-        userAuth.setPw("{noop}12345");
-        userAuth.setRole(ROLE.PROJECT_MANAGER);
-        userRepository.save(userAuth);
+        UserProfile userProfile = new UserProfile();
+        userProfile.setEmail("hahava@naver.com");
+        userProfile.setPw("{noop}12345");
+        userProfile.setRole(ROLE.PROJECT_MANAGER);
+        userRepository.save(userProfile);
     }
 
     @Test
     public void getUserTest() {
-        UserAuth mockUserAuth = userRepository.findByEmail("hahava@naer.com");
-        assertEquals(mockUserAuth.getRole(), ROLE.PROJECT_MANAGER);
+        UserProfile mockUserProfile = userRepository.findByEmail("hahava@naer.com");
+        assertEquals(mockUserProfile.getRole(), ROLE.PROJECT_MANAGER);
     }
 
     @Test
     public void findAllByEmailStartingWithTest(){
-        List<UserAuth> userAuths = userRepository.findAllByEmailStartingWith("haha");
-        UserAuth userAuth = userAuths.get(0);
-        assertEquals(userAuth.getEmail(), "hahava@naver.com");
+        List<UserProfile> userProfiles = userRepository.findAllByEmailStartingWith("haha");
+        UserProfile userProfile = userProfiles.get(0);
+        assertEquals(userProfile.getEmail(), "hahava@naver.com");
     }
 
 }

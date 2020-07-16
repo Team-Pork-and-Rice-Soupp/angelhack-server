@@ -3,7 +3,7 @@ package com.hackday.angelhack.workspace.dto;
 import com.hackday.angelhack.domain.PROJECT_ROLE;
 import com.hackday.angelhack.domain.Workspace;
 import com.hackday.angelhack.domain.WorkspaceUser;
-import com.hackday.angelhack.user.UserAuth;
+import com.hackday.angelhack.user.UserProfile;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +23,7 @@ public class WorkspaceUserSaveRequestDto {
         this.role = role;
     }
 
-    public WorkspaceUser toEntity(UserAuth user, Workspace workspace) {
+    public WorkspaceUser toEntity(UserProfile user, Workspace workspace) {
         WorkspaceUser entity = new WorkspaceUser();
         entity.setDescription(description);
         entity.setRole(role);

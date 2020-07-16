@@ -1,8 +1,7 @@
 package com.hackday.angelhack.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hackday.angelhack.user.UserAuth;
-import io.swagger.annotations.ApiParam;
+import com.hackday.angelhack.user.UserProfile;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,8 +24,8 @@ public class WorkspaceUser {
     private Workspace workspace;
 
     @ManyToOne
-    @JoinColumn(name = "USER_AUTH_id")
-    private UserAuth user;
+    @JoinColumn(name = "user_profile_id")
+    private UserProfile user;
 
     private String description;
 
