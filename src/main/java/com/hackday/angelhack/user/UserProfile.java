@@ -1,14 +1,15 @@
 package com.hackday.angelhack.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hackday.angelhack.domain.WorkspaceUser;
+import com.hackday.angelhack.common.constant.SecurityRole;
+import com.hackday.angelhack.workspace.WorkspaceUser;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
-import static com.hackday.angelhack.user.ROLE.USER;
+import static com.hackday.angelhack.common.constant.SecurityRole.USER;
 
 @Getter
 @Setter
@@ -30,7 +31,7 @@ public class UserProfile {
 
     @JsonIgnore
     @Enumerated(EnumType.STRING)
-    private ROLE role;
+    private SecurityRole securityRole;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
@@ -41,7 +42,7 @@ public class UserProfile {
         userProfile.setEmail(userAuthDTO.getEmail());
         userProfile.setName(userAuthDTO.getName());
         userProfile.setPw(userAuthDTO.getPw());
-        userProfile.setRole(USER);
+        userProfile.setSecurityRole(USER);
         return userProfile;
     }
 

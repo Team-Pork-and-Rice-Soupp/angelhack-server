@@ -1,8 +1,6 @@
 package com.hackday.angelhack.workspace;
 
-import com.hackday.angelhack.domain.ProjectRole;
-import com.hackday.angelhack.domain.Workspace;
-import com.hackday.angelhack.domain.WorkspaceUser;
+import com.hackday.angelhack.common.constant.ProjectRole;
 import com.hackday.angelhack.user.UserProfile;
 import com.hackday.angelhack.user.UserRepository;
 import org.junit.jupiter.api.Test;

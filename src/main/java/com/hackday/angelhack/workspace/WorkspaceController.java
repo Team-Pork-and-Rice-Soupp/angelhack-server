@@ -1,9 +1,5 @@
 package com.hackday.angelhack.workspace;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.hackday.angelhack.domain.Workspace;
-import com.hackday.angelhack.security.SecurityConst;
 import com.hackday.angelhack.workspace.dto.WorkspaceSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

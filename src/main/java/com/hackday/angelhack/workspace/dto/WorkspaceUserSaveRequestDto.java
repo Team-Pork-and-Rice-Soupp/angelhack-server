@@ -1,8 +1,8 @@
 package com.hackday.angelhack.workspace.dto;
 
-import com.hackday.angelhack.domain.ProjectRole;
-import com.hackday.angelhack.domain.Workspace;
-import com.hackday.angelhack.domain.WorkspaceUser;
+import com.hackday.angelhack.common.constant.ProjectRole;
+import com.hackday.angelhack.workspace.Workspace;
+import com.hackday.angelhack.workspace.WorkspaceUser;
 import com.hackday.angelhack.user.UserProfile;
 import lombok.Builder;
 import lombok.Getter;

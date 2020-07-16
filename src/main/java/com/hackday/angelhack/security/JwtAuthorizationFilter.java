@@ -2,7 +2,8 @@ package com.hackday.angelhack.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.hackday.angelhack.user.ROLE;
+import com.hackday.angelhack.common.constant.SecurityConst;
+import com.hackday.angelhack.common.constant.SecurityRole;
 import com.hackday.angelhack.user.UserProfile;
 import com.hackday.angelhack.user.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,7 +46,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         // FIXME change only for dev profile
         if(email.equals("root")){
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(null,null, Set.of(new SimpleGrantedAuthority(ROLE.ADMIN.name())));
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(null,null, Set.of(new SimpleGrantedAuthority(SecurityRole.ADMIN.name())));
             SecurityContextHolder.getContext().setAuthentication(auth);
             chain.doFilter(request, response);
             return;
@@ -53,7 +54,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         if (email != null) {
             UserProfile userProfile = userRepository.findByEmail(email);
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userProfile.getEmail(), userProfile.getPw(), Set.of(new SimpleGrantedAuthority(userProfile.getRole().name())));
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userProfile.getEmail(), userProfile.getPw(), Set.of(new SimpleGrantedAuthority(userProfile.getSecurityRole().name())));
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
 

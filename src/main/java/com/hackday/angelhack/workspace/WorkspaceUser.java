@@ -1,6 +1,7 @@
-package com.hackday.angelhack.domain;
+package com.hackday.angelhack.workspace;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hackday.angelhack.common.constant.ProjectRole;
 import com.hackday.angelhack.user.UserProfile;
 import lombok.Getter;
 import lombok.Setter;

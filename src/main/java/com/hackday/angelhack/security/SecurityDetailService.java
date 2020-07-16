@@ -21,6 +21,6 @@ public class SecurityDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserProfile userProfile = userRepository.findByEmail(email);
-        return new User(userProfile.getEmail(), userProfile.getPw(), Set.of(new SimpleGrantedAuthority(userProfile.getRole().name())));
+        return new User(userProfile.getEmail(), userProfile.getPw(), Set.of(new SimpleGrantedAuthority(userProfile.getSecurityRole().name())));
     }
 }

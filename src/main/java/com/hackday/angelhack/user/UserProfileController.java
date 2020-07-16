@@ -2,7 +2,7 @@ package com.hackday.angelhack.user;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.hackday.angelhack.security.SecurityConst;
+import com.hackday.angelhack.common.constant.SecurityConst;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

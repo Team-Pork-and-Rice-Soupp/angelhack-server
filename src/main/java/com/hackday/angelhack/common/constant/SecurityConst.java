@@ -1,4 +1,4 @@
-package com.hackday.angelhack.security;
+package com.hackday.angelhack.common.constant;
 
 public final class SecurityConst {
     private SecurityConst() {

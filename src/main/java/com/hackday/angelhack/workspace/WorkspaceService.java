@@ -2,10 +2,8 @@ package com.hackday.angelhack.workspace;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.hackday.angelhack.domain.ProjectRole;
-import com.hackday.angelhack.domain.Workspace;
-import com.hackday.angelhack.domain.WorkspaceUser;
-import com.hackday.angelhack.security.SecurityConst;
+import com.hackday.angelhack.common.constant.ProjectRole;
+import com.hackday.angelhack.common.constant.SecurityConst;
 import com.hackday.angelhack.user.UserProfile;
 import com.hackday.angelhack.user.UserRepository;
 import com.hackday.angelhack.workspace.dto.WorkspaceSaveRequestDto;

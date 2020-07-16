@@ -2,6 +2,7 @@ package com.hackday.angelhack.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.hackday.angelhack.common.constant.SecurityConst;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
