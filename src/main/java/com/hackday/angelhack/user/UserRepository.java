@@ -4,8 +4,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface UserRepository extends CrudRepository<UserAuth, Long> {
-    UserAuth findByEmail(String email);
+public interface UserRepository extends CrudRepository<UserProfile, Long> {
+    UserProfile findByEmail(String email);
 
-    List<UserAuth> findAllByEmailStartingWith(String keyword);
+    List<UserProfile> findAllByEmailStartingWith(String keyword);
 }

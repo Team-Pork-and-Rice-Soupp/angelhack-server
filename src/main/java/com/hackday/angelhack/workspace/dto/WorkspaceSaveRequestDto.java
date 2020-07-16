@@ -1,6 +1,6 @@
 package com.hackday.angelhack.workspace.dto;
 
-import com.hackday.angelhack.domain.Workspace;
+import com.hackday.angelhack.workspace.Workspace;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

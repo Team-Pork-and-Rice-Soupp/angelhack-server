@@ -1,6 +1,6 @@
 package com.hackday.angelhack.security;
 
-import com.hackday.angelhack.user.UserAuth;
+import com.hackday.angelhack.user.UserProfile;
 import com.hackday.angelhack.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +20,7 @@ public class SecurityDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserAuth userAuth = userRepository.findByEmail(email);
-        return new User(userAuth.getEmail(), userAuth.getPw(), Set.of(new SimpleGrantedAuthority(userAuth.getRole().name())));
+        UserProfile userProfile = userRepository.findByEmail(email);
+        return new User(userProfile.getEmail(), userProfile.getPw(), Set.of(new SimpleGrantedAuthority(userProfile.getSecurityRole().name())));
     }
 }

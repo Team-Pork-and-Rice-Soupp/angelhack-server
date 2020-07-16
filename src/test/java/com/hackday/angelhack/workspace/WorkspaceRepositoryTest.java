@@ -1,9 +1,7 @@
 package com.hackday.angelhack.workspace;
 
-import com.hackday.angelhack.domain.PROJECT_ROLE;
-import com.hackday.angelhack.domain.Workspace;
-import com.hackday.angelhack.domain.WorkspaceUser;
-import com.hackday.angelhack.user.UserAuth;
+import com.hackday.angelhack.common.constant.ProjectRole;
+import com.hackday.angelhack.user.UserProfile;
 import com.hackday.angelhack.user.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +21,8 @@ public class WorkspaceRepositoryTest {
 
     @Test
     public void addWorkSpaceTest() {
-        UserAuth userOne = userRepository.findByEmail("hahava1@naver.com");
-        UserAuth userTwo = userRepository.findByEmail("hahava@naver.com");
+        UserProfile userOne = userRepository.findByEmail("hahava1@naver.com");
+        UserProfile userTwo = userRepository.findByEmail("hahava@naver.com");
 
         Workspace workspace = new Workspace();
         workspace.setTitle("hello workspace title");
@@ -34,14 +32,14 @@ public class WorkspaceRepositoryTest {
         WorkspaceUser workspaceUser = new WorkspaceUser();
         workspaceUser.setUser(userOne);
         workspaceUser.setDescription("hello workspace user description");
-        workspaceUser.setRole(PROJECT_ROLE.CREW);
+        workspaceUser.setRole(ProjectRole.CREW);
         workspaceUser.setWorkspace(workspace);
         workspaceUserRepository.save(workspaceUser);
 
         WorkspaceUser workspaceUser2 = new WorkspaceUser();
         workspaceUser2.setUser(userTwo);
         workspaceUser2.setDescription("hello workspace user2 description");
-        workspaceUser2.setRole(PROJECT_ROLE.MANAGER);
+        workspaceUser2.setRole(ProjectRole.MANAGER);
         workspaceUser2.setWorkspace(workspace);
         workspaceUserRepository.save(workspaceUser2);
     }

@@ -18,8 +18,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/search")
-    public ResponseEntity<List<UserAuth>> getUsers(@RequestParam("keyword") String email) {
-        List<UserAuth> users = userService.findUserByEmail(email);
+    public ResponseEntity<List<UserProfile>> getUsers(@RequestParam("keyword") String email) {
+        List<UserProfile> users = userService.findUserByEmail(email);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

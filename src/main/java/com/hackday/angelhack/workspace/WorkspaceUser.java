@@ -1,8 +1,9 @@
-package com.hackday.angelhack.domain;
+package com.hackday.angelhack.workspace;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hackday.angelhack.user.UserAuth;
-import io.swagger.annotations.ApiParam;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.hackday.angelhack.common.constant.ProjectRole;
+import com.hackday.angelhack.user.UserProfile;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,11 +26,12 @@ public class WorkspaceUser {
     private Workspace workspace;
 
     @ManyToOne
-    @JoinColumn(name = "USER_AUTH_id")
-    private UserAuth user;
+    @JsonUnwrapped
+    @JoinColumn(name = "user_profile_id")
+    private UserProfile user;
 
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private PROJECT_ROLE role;
+    private ProjectRole role;
 }

@@ -1,4 +1,4 @@
-package com.hackday.angelhack.domain;
+package com.hackday.angelhack.common.domain;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

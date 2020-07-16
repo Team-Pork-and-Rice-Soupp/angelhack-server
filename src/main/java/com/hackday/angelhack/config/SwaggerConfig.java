@@ -1,6 +1,6 @@
 package com.hackday.angelhack.config;
 
-import com.hackday.angelhack.security.SecurityConst;
+import com.hackday.angelhack.common.constant.SecurityConst;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;

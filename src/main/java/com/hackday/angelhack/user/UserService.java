@@ -11,7 +11,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public List<UserAuth> findUserByEmail(String keyword){
+    public List<UserProfile> findUserByEmail(String keyword){
         return userRepository.findAllByEmailStartingWith(keyword);
     }
 }
