@@ -30,5 +30,5 @@ public class WorkspaceUser {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private PROJECT_ROLE role;
+    private ProjectRole role;
 }

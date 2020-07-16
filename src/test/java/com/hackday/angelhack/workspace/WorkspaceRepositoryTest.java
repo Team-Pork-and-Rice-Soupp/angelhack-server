@@ -1,6 +1,6 @@
 package com.hackday.angelhack.workspace;
 
-import com.hackday.angelhack.domain.PROJECT_ROLE;
+import com.hackday.angelhack.domain.ProjectRole;
 import com.hackday.angelhack.domain.Workspace;
 import com.hackday.angelhack.domain.WorkspaceUser;
 import com.hackday.angelhack.user.UserProfile;
@@ -34,14 +34,14 @@ public class WorkspaceRepositoryTest {
         WorkspaceUser workspaceUser = new WorkspaceUser();
         workspaceUser.setUser(userOne);
         workspaceUser.setDescription("hello workspace user description");
-        workspaceUser.setRole(PROJECT_ROLE.CREW);
+        workspaceUser.setRole(ProjectRole.CREW);
         workspaceUser.setWorkspace(workspace);
         workspaceUserRepository.save(workspaceUser);
 
         WorkspaceUser workspaceUser2 = new WorkspaceUser();
         workspaceUser2.setUser(userTwo);
         workspaceUser2.setDescription("hello workspace user2 description");
-        workspaceUser2.setRole(PROJECT_ROLE.MANAGER);
+        workspaceUser2.setRole(ProjectRole.MANAGER);
         workspaceUser2.setWorkspace(workspace);
         workspaceUserRepository.save(workspaceUser2);
     }

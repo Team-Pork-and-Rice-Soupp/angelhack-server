@@ -1,5 +1,5 @@
 package com.hackday.angelhack.user;
 
-public enum ROLE {
+public enum Role {
     USER, ADMIN, PROJECT_MANAGER
 }
