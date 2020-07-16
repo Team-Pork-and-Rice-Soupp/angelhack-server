@@ -2,11 +2,9 @@ package com.hackday.angelhack.workspace;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.hackday.angelhack.domain.PROJECT_ROLE;
-import com.hackday.angelhack.domain.Workspace;
-import com.hackday.angelhack.domain.WorkspaceUser;
-import com.hackday.angelhack.security.SecurityConst;
-import com.hackday.angelhack.user.UserAuth;
+import com.hackday.angelhack.common.constant.ProjectRole;
+import com.hackday.angelhack.common.constant.SecurityConst;
+import com.hackday.angelhack.user.UserProfile;
 import com.hackday.angelhack.user.UserRepository;
 import com.hackday.angelhack.workspace.dto.WorkspaceSaveRequestDto;
 import com.hackday.angelhack.workspace.dto.WorkspaceUserSaveRequestDto;
@@ -31,7 +29,7 @@ public class WorkspaceService {
         String email = decodeJWT(request);
 
         Iterable<Workspace> workspaces = workspaceRepository.findAll();
-        UserAuth user = userRepository.findByEmail(email);
+        UserProfile user = userRepository.findByEmail(email);
         List<Workspace> result = new ArrayList<>();
         for (Workspace workspace : workspaces) {
             for (WorkspaceUser workspaceUser : workspace.getWorkspaceUsers()) {
@@ -50,7 +48,7 @@ public class WorkspaceService {
 
         //workspaceUser save
         for (WorkspaceUserSaveRequestDto dto : requestDto.getMembers()) {
-            UserAuth user = userRepository.findByEmail(dto.getEmail());
+            UserProfile user = userRepository.findByEmail(dto.getEmail());
             WorkspaceUser workspaceUser = dto.toEntity(user, workspace);
             workspaceUserRepository.save(workspaceUser);
         }
@@ -80,7 +78,7 @@ public class WorkspaceService {
     @Transactional
     public Long deleteById(HttpServletRequest request, Long workspaceId){
         String email = decodeJWT(request);
-        UserAuth user = userRepository.findByEmail(email);
+        UserProfile user = userRepository.findByEmail(email);
         List<WorkspaceUser> members = workspaceUserRepository.findAllByUser(user);
         WorkspaceUser member = null;
 
@@ -92,7 +90,7 @@ public class WorkspaceService {
         }
 
 
-        if(member == null || !member.getRole().equals(PROJECT_ROLE.MANAGER)){
+        if(member == null || !member.getRole().equals(ProjectRole.MANAGER)){
             return 0L;
         }
 

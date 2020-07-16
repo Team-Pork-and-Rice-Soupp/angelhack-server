@@ -1,9 +1,8 @@
-package com.hackday.angelhack.domain;
+package com.hackday.angelhack.workspace;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.hackday.angelhack.common.domain.BaseTimeEntity;
 import lombok.Getter;
 import lombok.Setter;
 

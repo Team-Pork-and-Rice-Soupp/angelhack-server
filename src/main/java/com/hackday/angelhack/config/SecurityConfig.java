@@ -1,7 +1,7 @@
 package com.hackday.angelhack.config;
 
 import com.hackday.angelhack.security.JwtAuthorizationFilter;
-import com.hackday.angelhack.user.ROLE;
+import com.hackday.angelhack.common.constant.SecurityRole;
 import com.hackday.angelhack.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/auth/**").permitAll();
-        http.authorizeRequests().antMatchers("/api/**").hasAnyAuthority(ROLE.ADMIN.name(), ROLE.USER.name(), ROLE.PROJECT_MANAGER.name());
+        http.authorizeRequests().antMatchers("/api/**").hasAnyAuthority(SecurityRole.ADMIN.name(), SecurityRole.USER.name(), SecurityRole.PROJECT_MANAGER.name());
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository)).httpBasic().disable();
 
