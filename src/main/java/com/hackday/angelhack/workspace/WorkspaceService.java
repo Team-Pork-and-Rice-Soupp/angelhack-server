@@ -6,6 +6,7 @@ import com.hackday.angelhack.common.constant.ProjectRole;
 import com.hackday.angelhack.common.constant.SecurityConst;
 import com.hackday.angelhack.user.UserProfile;
 import com.hackday.angelhack.user.UserRepository;
+import com.hackday.angelhack.workspace.dto.WorkspaceResponseDto;
 import com.hackday.angelhack.workspace.dto.WorkspaceSaveRequestDto;
 import com.hackday.angelhack.workspace.dto.WorkspaceUserSaveRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -25,19 +26,20 @@ public class WorkspaceService {
     private final UserRepository userRepository;
     private final WorkspaceUserRepository workspaceUserRepository;
 
-    public List<Workspace> findAllByUserId(HttpServletRequest request) {
+    public List<WorkspaceResponseDto> findAllByUserId(HttpServletRequest request) {
         String email = decodeJWT(request);
 
         Iterable<Workspace> workspaces = workspaceRepository.findAll();
         UserProfile user = userRepository.findByEmail(email);
-        List<Workspace> result = new ArrayList<>();
+        List<WorkspaceResponseDto> result = new ArrayList<>();
         for (Workspace workspace : workspaces) {
             for (WorkspaceUser workspaceUser : workspace.getWorkspaceUsers()) {
                 if (workspaceUser.getId().equals(user.getId())) {
-                    result.add(workspace);
+                    result.add(new WorkspaceResponseDto(workspace));
                 }
             }
         }
+
         return result;
     }
 

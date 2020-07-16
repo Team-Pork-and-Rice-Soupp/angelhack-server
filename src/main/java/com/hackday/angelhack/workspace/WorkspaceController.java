@@ -1,5 +1,6 @@
 package com.hackday.angelhack.workspace;
 
+import com.hackday.angelhack.workspace.dto.WorkspaceResponseDto;
 import com.hackday.angelhack.workspace.dto.WorkspaceSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,11 +20,11 @@ public class WorkspaceController {
     private final WorkspaceService workspaceService;
 
     @GetMapping()
-    public ResponseEntity<Map<String, List<Workspace>>> getWorkspaces(HttpServletRequest request) {
-        List<Workspace> workspaces = workspaceService.findAllByUserId(request);
-        Map<String, List<Workspace>> resposne = new LinkedHashMap<>();
-        resposne.put("workspaceList", workspaces);
-        return new ResponseEntity<>(resposne, HttpStatus.OK);
+    public ResponseEntity<List<WorkspaceResponseDto>> getWorkspaces(HttpServletRequest request) {
+        List<WorkspaceResponseDto> workspaces = workspaceService.findAllByUserId(request);
+//        Map<String, List<WorkspaceResponseDto>> resposne = new LinkedHashMap<>();
+//        resposne.put("workspaceList", workspaces);
+        return new ResponseEntity<>(workspaces, HttpStatus.OK);
     }
 
     @GetMapping("/{workspaceId}")
