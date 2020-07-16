@@ -1,6 +1,7 @@
 package com.hackday.angelhack.workspace;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.hackday.angelhack.common.constant.ProjectRole;
 import com.hackday.angelhack.user.UserProfile;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class WorkspaceUser {
     private Workspace workspace;
 
     @ManyToOne
+    @JsonUnwrapped
     @JoinColumn(name = "user_profile_id")
     private UserProfile user;
 
