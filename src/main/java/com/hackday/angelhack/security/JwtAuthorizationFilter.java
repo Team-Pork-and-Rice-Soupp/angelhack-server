@@ -1,11 +1,10 @@
 package com.hackday.angelhack.security;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.hackday.angelhack.common.constant.SecurityConst;
 import com.hackday.angelhack.common.constant.SecurityRole;
 import com.hackday.angelhack.user.UserProfile;
 import com.hackday.angelhack.user.UserRepository;
+import com.hackday.angelhack.util.JWTUtil;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,16 +36,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        String email = JWT
-                .require(Algorithm.HMAC512(SecurityConst.SECRET_KEY))
-                .build()
-                .verify(token.replace(SecurityConst.TOKEN_PREFIX, ""))
-                .getSubject();
-
+        String email = JWTUtil.decodeJWT(token);
 
         // FIXME change only for dev profile
-        if(email.equals("root")){
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(null,null, Set.of(new SimpleGrantedAuthority(SecurityRole.ADMIN.name())));
+        if (email.equals("root")) {
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(null, null, Set.of(new SimpleGrantedAuthority(SecurityRole.ADMIN.name())));
             SecurityContextHolder.getContext().setAuthentication(auth);
             chain.doFilter(request, response);
             return;

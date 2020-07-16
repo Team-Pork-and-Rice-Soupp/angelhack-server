@@ -1,8 +1,7 @@
 package com.hackday.angelhack.user;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.hackday.angelhack.common.constant.SecurityConst;
+import com.hackday.angelhack.util.JWTUtil;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -33,23 +32,25 @@ public class UserProfileController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    public ResponseEntity<String> doLogin(
-            @ApiParam(value = "name은 필요하지 않습니다.")
-            @RequestBody UserAuthDTO userAccount) {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userAccount.getEmail(), userAccount.getPw());
-        Authentication authentication = authenticationManager.authenticate(token);
+    public ResponseEntity<Map<String, String>> doLogin(@ApiParam(value = "name은 필요하지 않습니다.") @RequestBody UserAuthDTO userAccount) {
+
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userAccount.getEmail(), userAccount.getPw());
+        Authentication authentication = authenticationManager.authenticate(auth);
 
         if (authentication.isAuthenticated() == false) {
-            return new ResponseEntity<>("email or password invalid", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        final String jwt = JWT
-                .create()
-                .withSubject(authentication.getName())
-                .withExpiresAt(Date.valueOf(LocalDate.now().plusDays(2)))
-                .sign(Algorithm.HMAC512(SecurityConst.SECRET_KEY));
+        UserProfile loginedUser = userRepository.findByEmail(userAccount.getEmail());
 
-        return new ResponseEntity<>(SecurityConst.TOKEN_PREFIX + jwt, HttpStatus.OK);
+        final String token = SecurityConst.TOKEN_PREFIX.concat(JWTUtil.encodeJWT(authentication.getName()));
+
+        Map<String, String> map = new HashMap<>();
+        map.put("token", token);
+        map.put("email", loginedUser.getEmail());
+        map.put("name", loginedUser.getName());
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @PostMapping("/signup")
