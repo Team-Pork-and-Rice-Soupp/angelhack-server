@@ -1,8 +1,9 @@
 package com.hackday.angelhack.config;
 
-import com.hackday.angelhack.security.JwtAuthorizationFilter;
 import com.hackday.angelhack.common.constant.SecurityRole;
+import com.hackday.angelhack.security.JwtAuthorizationFilter;
 import com.hackday.angelhack.user.UserRepository;
+import org.apache.catalina.filters.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -29,7 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/auth/**").permitAll();
         http.authorizeRequests().antMatchers("/api/**").hasAnyAuthority(SecurityRole.ADMIN.name(), SecurityRole.USER.name(), SecurityRole.PROJECT_MANAGER.name());
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository)).httpBasic().disable();
+                .and()
+                .addFilterBefore(new CorsFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository)).httpBasic().disable();
 
         // only for dev profile
         http
