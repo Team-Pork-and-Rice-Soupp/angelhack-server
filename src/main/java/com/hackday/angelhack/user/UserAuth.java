@@ -15,25 +15,24 @@ import java.util.List;
 @Entity
 @Table(name = "USER_AUTH")
 public class UserAuth {
+
     @Id
-    @ApiParam(hidden = true)
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ApiParam(value = "사용자의 이메일", required = true)
     private String email;
 
-    @ApiParam(value = "사용자의 패스워드", required = true)
+    private String name;
+
     @JsonIgnore
     private String pw;
 
-    @ApiParam(hidden = true)
     @JsonIgnore
     @Enumerated(EnumType.STRING)
     private ROLE role;
 
-    @OneToMany(mappedBy = "user")
     @JsonIgnore
+    @OneToMany(mappedBy = "user")
     private List<WorkspaceUser> workspaceUsers;
 }
