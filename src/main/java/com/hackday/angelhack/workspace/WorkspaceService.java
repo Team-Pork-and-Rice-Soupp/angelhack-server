@@ -29,15 +29,11 @@ public class WorkspaceService {
     public List<WorkspaceResponseDto> findAllByUserId(HttpServletRequest request) {
         String email = decodeJWT(request);
 
-        Iterable<Workspace> workspaces = workspaceRepository.findAll();
         UserProfile user = userRepository.findByEmail(email);
+        List<WorkspaceUser> members = workspaceUserRepository.findAllByUser(user);
         List<WorkspaceResponseDto> result = new ArrayList<>();
-        for (Workspace workspace : workspaces) {
-            for (WorkspaceUser workspaceUser : workspace.getWorkspaceUsers()) {
-                if (workspaceUser.getId().equals(user.getId())) {
-                    result.add(new WorkspaceResponseDto(workspace));
-                }
-            }
+        for (WorkspaceUser member : members) {
+            result.add(new WorkspaceResponseDto(member.getWorkspace()));
         }
 
         return result;
