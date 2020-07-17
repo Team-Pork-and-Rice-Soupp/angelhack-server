@@ -11,9 +11,8 @@ public class SocketSecurityConfig extends AbstractSecurityWebSocketMessageBroker
     @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
         messages
-                .simpDestMatchers("/websocket/endpoint", "/websocket/subscribe")
-                .authenticated()
-                .anyMessage()
-                .authenticated();
+                .simpDestMatchers("/websocket/**")
+                .permitAll()
+                .anyMessage();
     }
 }
