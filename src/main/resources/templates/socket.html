@@ -7,40 +7,38 @@
     <script type="text/javascript" th:src="@{/js/stomp.js}"></script>
 </head>
 <body>
-<h2>???</h2>
+<textarea id="log"></textarea>
 <button onclick="sendMsg()" value="btn">click</button>
 </body>
 
-<script>
+<script th:inline="javascript">
     let socket = new SockJS("/websocket/connect");
     stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        setConnected(true);
 
-        console.log(`frame is ${frame}`)
+    /*<![CDATA[*/
+    let logId = /*[[${log_id}]]*/;
+    /*]]*/
 
-        stompClient.subscribe('/websocket/subscribe', function (message) {
-            console.log(message);
-        })
+    function connection() {
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe('/websocket/subscribe/' + logId, function (message) {
+                recv(JSON.parse(message.body));
+            });
+        }, (error) => {
+            console.log(error);
+        });
+    }
+    connection();
 
-    });
-
-    socket.onopen = function () {
-        console.log("on open")
-    };
-
-    socket.onmessage = function (e) {
-        console.log('message', e.data)
-        socket.close();
-    };
-
-    socket.onclose = function () {
-        console.log('close')
-    };
+    function recv(data) {
+        document.getElementById("log").value = data.content;
+    }
 
     function sendMsg() {
-        console.log("send")
-        stompClient.send('/websocket/msg/content', {}, "test")
+        let content = document.getElementById("log").value;
+        let msg = {content: content, logId: logId};
+
+        stompClient.send('/websocket/msg/content', {}, JSON.stringify(msg));
     }
 
 </script>
