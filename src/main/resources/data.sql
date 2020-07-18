@@ -21,4 +21,8 @@ insert into workspace_user(id, description, role, user_profile_id, workspace_id)
 insert into workspace_user(id, description, role, user_profile_id, workspace_id) values(default, '팀장', 'MANAGER', 4, 4);
 insert into workspace_user(id, description, role, user_profile_id, workspace_id) values(default, '부팀장', 'CREW', 1, 4);
 
-
+-- meetinglog
+insert into meeting_log (id, title, content, user_profile_id, workspace_id) values (default, '제목1', 'hello world', 1, 1);
+insert into meeting_log (id, title, content, user_profile_id, workspace_id) values (default, '제목2', '2번째 회의록', 1, 1);
+insert into meeting_log (id, title, content, user_profile_id, workspace_id) values (default, '제목3', '<p>첫번째 회의록입니다. ㅎㅎㅎㅎ</p>', 2, 2);
+insert into meeting_log (id, title, content, user_profile_id, workspace_id) values (default, '제목4', '<p>회의록입니다. ㅎㅎㅎㅎ</p>', 3, 2);
