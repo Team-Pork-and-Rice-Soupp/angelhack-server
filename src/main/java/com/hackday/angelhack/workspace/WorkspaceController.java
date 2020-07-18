@@ -20,8 +20,6 @@ public class WorkspaceController {
     @GetMapping()
     public ResponseEntity<List<WorkspaceResponseDto>> getWorkspaces(HttpServletRequest request) {
         List<WorkspaceResponseDto> workspaces = workspaceService.findAllByUserId(request);
-//        Map<String, List<WorkspaceResponseDto>> resposne = new LinkedHashMap<>();
-//        resposne.put("workspaceList", workspaces);
         return new ResponseEntity<>(workspaces, HttpStatus.OK);
     }
 

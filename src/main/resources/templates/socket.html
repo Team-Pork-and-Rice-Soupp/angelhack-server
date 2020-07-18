@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/stomp.js}"></script>
+</head>
+<body>
+<h2>???</h2>
+<button onclick="sendMsg()" value="btn">click</button>
+</body>
+
+<script>
+    let socket = new SockJS("/websocket/connect");
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        setConnected(true);
+
+        console.log(`frame is ${frame}`)
+
+        stompClient.subscribe('/websocket/subscribe', function (message) {
+            console.log(message);
+        })
+
+    });
+
+    socket.onopen = function () {
+        console.log("on open")
+    };
+
+    socket.onmessage = function (e) {
+        console.log('message', e.data)
+        socket.close();
+    };
+
+    socket.onclose = function () {
+        console.log('close')
+    };
+
+    function sendMsg() {
+        console.log("send")
+        stompClient.send('/websocket/msg/content', {}, "test")
+    }
+
+</script>
+</html>

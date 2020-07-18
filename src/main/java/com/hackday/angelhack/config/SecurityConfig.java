@@ -31,11 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/auth/**").permitAll();
-        http.authorizeRequests().antMatchers(
-                "/api/**",
-                "/websocket/endpoint",
-                "/websocket/subscribe").hasAnyAuthority(SecurityRole.ADMIN.name(), SecurityRole.USER.name(), SecurityRole.PROJECT_MANAGER.name());
+        http.authorizeRequests().antMatchers("/auth/**","/websocket/**", "/js/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/**").hasAnyAuthority(SecurityRole.ADMIN.name(), SecurityRole.USER.name(), SecurityRole.PROJECT_MANAGER.name());
         http.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll();
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
