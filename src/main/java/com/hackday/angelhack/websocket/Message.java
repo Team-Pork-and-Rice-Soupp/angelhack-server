@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class Message {
 
-    private String user;
+    private String logId;
     private String content;
 
 }
