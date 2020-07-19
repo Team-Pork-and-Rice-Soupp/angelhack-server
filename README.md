@@ -6,13 +6,13 @@
 - Maven 3.6.3
 - Java 11
 - Spring boot 2.3.1
-- MySQL 5.7.xx ~ 8.0.xx
+- MySQL 8.0.xx
 
 
 ## Installation
 ### Clone the project
 ```
-git clone https://github.com/Team-Pork-and-Rice-Soupp/angelhack-front.git
+https://github.com/Team-Pork-and-Rice-Soupp/angelhack-server.git
 ```
 ### Project Settings
 properties Setting
