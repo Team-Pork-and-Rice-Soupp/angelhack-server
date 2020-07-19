@@ -8,9 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,8 +20,6 @@ public class WorkspaceController {
     @GetMapping()
     public ResponseEntity<List<WorkspaceResponseDto>> getWorkspaces(HttpServletRequest request) {
         List<WorkspaceResponseDto> workspaces = workspaceService.findAllByUserId(request);
-//        Map<String, List<WorkspaceResponseDto>> resposne = new LinkedHashMap<>();
-//        resposne.put("workspaceList", workspaces);
         return new ResponseEntity<>(workspaces, HttpStatus.OK);
     }
 

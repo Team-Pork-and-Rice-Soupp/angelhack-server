@@ -5,6 +5,7 @@ import com.hackday.angelhack.common.constant.SecurityRole;
 import com.hackday.angelhack.user.UserProfile;
 import com.hackday.angelhack.user.UserRepository;
 import com.hackday.angelhack.util.JWTUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,6 +31,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String token = request.getHeader(SecurityConst.HEADER_STRING);
+
+        if(StringUtils.equals(request.getMethod(), "OPTIONS")){
+            chain.doFilter(request, response);
+        }
 
         if (token == null) {
             chain.doFilter(request, response);

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/stomp.js}"></script>
+</head>
+<body>
+<textarea id="log"></textarea>
+<button onclick="sendMsg()" value="btn">click</button>
+</body>
+
+<script th:inline="javascript">
+    let socket = new SockJS("/websocket/connect");
+    stompClient = Stomp.over(socket);
+
+    /*<![CDATA[*/
+    let logId = /*[[${log_id}]]*/;
+    /*]]*/
+
+    function connection() {
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe('/websocket/subscribe/' + logId, function (message) {
+                recv(JSON.parse(message.body));
+            });
+        }, (error) => {
+            console.log(error);
+        });
+    }
+    connection();
+
+    function recv(data) {
+        document.getElementById("log").value = data.content;
+    }
+
+    function sendMsg() {
+        let content = document.getElementById("log").value;
+        let msg = {content: content, logId: logId};
+
+        stompClient.send('/websocket/msg/content', {}, JSON.stringify(msg));
+    }
+
+</script>
+</html>
