@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.hackday.angelhack.common.domain.BaseTimeEntity;
+import com.hackday.angelhack.document.Document;
 import com.hackday.angelhack.projecttool.ProjectTool;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,4 +34,7 @@ public class Workspace extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "workspace", cascade = CascadeType.REMOVE)
     private List<ProjectTool> tools;
+
+    @OneToMany(mappedBy = "workspace", cascade = CascadeType.REMOVE)
+    private List<Document> documents;
 }
