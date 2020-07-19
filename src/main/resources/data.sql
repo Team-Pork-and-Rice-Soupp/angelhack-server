@@ -32,3 +32,6 @@ insert into project_tool (tool_id, contents, tool_name, workspace_id) values (de
 insert into project_tool (tool_id, contents, tool_name, workspace_id) values (default, '{"id":"1"}', 'asisTobe', 2);
 insert into project_tool (tool_id, contents, tool_name, workspace_id) values (default, '{"id":"1"}', 'logicTree', 3);
 insert into project_tool (tool_id, contents, tool_name, workspace_id) values (default, '{"id":"1"}', 'paretoChart', 4);
+
+-- document
+insert into document (id, title, content, workspace_id, created_date, modified_date) values (default , "공동 문서1", "<p>첫번 째 문서입니다.</p>", "1", sysdate(), sysdate());
