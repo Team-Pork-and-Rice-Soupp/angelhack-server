@@ -26,3 +26,9 @@ insert into meeting_log (id, title, content, user_profile_id, workspace_id) valu
 insert into meeting_log (id, title, content, user_profile_id, workspace_id) values (default, '제목2', '2번째 회의록', 1, 1);
 insert into meeting_log (id, title, content, user_profile_id, workspace_id) values (default, '제목3', '<p>첫번째 회의록입니다. ㅎㅎㅎㅎ</p>', 2, 2);
 insert into meeting_log (id, title, content, user_profile_id, workspace_id) values (default, '제목4', '<p>회의록입니다. ㅎㅎㅎㅎ</p>', 3, 2);
+
+-- project tool
+insert into project_tool (tool_id, contents, tool_name, workspace_id) values (default, '{"id":"1"}', 'SWOT', 1);
+insert into project_tool (tool_id, contents, tool_name, workspace_id) values (default, '{"id":"1"}', 'asisTobe', 2);
+insert into project_tool (tool_id, contents, tool_name, workspace_id) values (default, '{"id":"1"}', 'logicTree', 3);
+insert into project_tool (tool_id, contents, tool_name, workspace_id) values (default, '{"id":"1"}', 'paretoChart', 4);
