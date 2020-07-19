@@ -3,12 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <!-- include libraries(jQuery, bootstrap) -->
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+
+    <!-- include summernote css/js-->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
     <script type="text/javascript" th:src="@{/js/stomp.js}"></script>
 </head>
 <body>
-<textarea id="log"></textarea>
+<h2 th:text="${document.title}"></h2>
+<textarea name="content" id="summernote" th:text="${document.content}"></textarea>
 <button onclick="sendMsg()" value="btn">click</button>
+<button onclick="socketClose()" value="btn">close</button>
 </body>
 
 <script th:inline="javascript">
@@ -16,30 +28,51 @@
     stompClient = Stomp.over(socket);
 
     /*<![CDATA[*/
-    let logId = /*[[${log_id}]]*/;
+    let documentId = /*[[${document.id}]]*/;
     /*]]*/
+    let subId;
 
     function connection() {
         stompClient.connect({}, function (frame) {
-            stompClient.subscribe('/websocket/subscribe/' + logId, function (message) {
+            subId = stompClient.subscribe('/websocket/subscribe/' + documentId, function (message) {
                 recv(JSON.parse(message.body));
             });
         }, (error) => {
             console.log(error);
         });
     }
+
     connection();
 
     function recv(data) {
-        document.getElementById("log").value = data.content;
+        console.log("recv", data);
+        $('#summernote').summernote("code", data.content);
     }
 
     function sendMsg() {
-        let content = document.getElementById("log").value;
-        let msg = {content: content, logId: logId};
+        let content = document.getElementById("summernote").value;
+        let msg = {content: content, documentId: documentId};
+        console.log("send ", msg)
 
         stompClient.send('/websocket/msg/content', {}, JSON.stringify(msg));
     }
 
+    function socketClose() {
+        stompClient.disconnect((e) => {
+            console.log(e);
+            console.log("close");
+        });
+    }
+
+</script>
+<script>
+    $(document).ready(function () {
+        $('#summernote').summernote({
+            height: 300,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true                  // set focus to editable area after initializing summernote
+        });
+    });
 </script>
 </html>

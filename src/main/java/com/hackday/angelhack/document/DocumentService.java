@@ -13,6 +13,10 @@ public class DocumentService {
     private final DocumentRepository documentRepository;
     private final WorkspaceRepository workspaceRepository;
 
+    public Document getDocumentById(Long documentId){
+        return documentRepository.findById(documentId).get();
+    }
+
     public Document crateDocument(DocumentSaveRequestDto requestDto){
         Workspace workspace = workspaceRepository.findById(requestDto.getWorkspaceId()).get();
         Document document = new Document();
