@@ -1,5 +1,6 @@
 package com.hackday.angelhack.websocket;
 
+import com.hackday.angelhack.document.DocumentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -11,9 +12,11 @@ public class WebSocketController {
 
     private final SimpMessageSendingOperations messagingTemplate;
     private final WebSocketService webSocketService;
+    private final DocumentService documentService;
 
     @MessageMapping("/content")
     public void send(Message message) {
+        documentService.receiveMessage(message);
         messagingTemplate.convertAndSend("/websocket/subscribe/" + message.getDocumentId(), message);
     }
 

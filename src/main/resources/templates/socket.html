@@ -19,8 +19,6 @@
 <body>
 <h2 th:text="${document.title}"></h2>
 <textarea name="content" id="summernote" th:text="${document.content}"></textarea>
-<button onclick="sendMsg()" value="btn">click</button>
-<button onclick="socketClose()" value="btn">close</button>
 </body>
 
 <script th:inline="javascript">
@@ -57,13 +55,6 @@
         stompClient.send('/websocket/msg/content', {}, JSON.stringify(msg));
     }
 
-    function socketClose() {
-        stompClient.disconnect((e) => {
-            console.log(e);
-            console.log("close");
-        });
-    }
-
 </script>
 <script>
     let timeout = null;
@@ -79,7 +70,7 @@
                     timeout = setTimeout(()=>{
                         console.log("time");
                         sendMsg();
-                    }, 1000);
+                    }, 2500);
                 }
             }
         });

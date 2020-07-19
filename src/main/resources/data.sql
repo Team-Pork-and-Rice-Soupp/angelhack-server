@@ -35,3 +35,18 @@ insert into project_tool (tool_id, contents, tool_name, workspace_id) values (de
 
 -- document
 insert into document (id, title, content, workspace_id, created_date, modified_date) values (default , "공동 문서1", "<p>첫번 째 문서입니다.</p>", "1", sysdate(), sysdate());
+insert into document (id, title, content, workspace_id, created_date, modified_date) values (default , "공동 문서2", "<ul><li>2번 문서입니다.</li></ul>", "1", sysdate(), sysdate());
+
+
+-- assessment
+insert into assessment(id, score, step, estimator, evaluated_user, work_space_id) values (default, 98, '1', 1, 1, 1);
+insert into assessment(id, score, step, estimator, evaluated_user, work_space_id) values (default, 98, '3', 2, 1, 1);
+insert into assessment(id, score, step, estimator, evaluated_user, work_space_id) values (default, 97, '2', 3, 1, 1);
+insert into assessment(id, score, step, estimator, evaluated_user, work_space_id) values (default, 97, '4', 4, 1, 1);
+insert into assessment(id, score, step, estimator, evaluated_user, work_space_id) values (default, 97, '4', 2, 2, 1);
+insert into assessment(id, score, step, estimator, evaluated_user, work_space_id) values (default, 97, '1', 2, 2, 1);
+insert into assessment(id, score, step, estimator, evaluated_user, work_space_id) values (default, 97, '2', 2, 2, 1);
+insert into assessment(id, score, step, estimator, evaluated_user, work_space_id) values (default, 97, '3', 2, 2, 1);
+insert into assessment(id, score, step, estimator, evaluated_user, work_space_id) values (default, 97, '3', 2, 3, 1);
+insert into assessment(id, score, step, estimator, evaluated_user, work_space_id) values (default, 94, '3', 1, 3, 1);
+insert into assessment(id, score, step, estimator, evaluated_user, work_space_id) values (default, 92, '3', 4, 3, 1);
