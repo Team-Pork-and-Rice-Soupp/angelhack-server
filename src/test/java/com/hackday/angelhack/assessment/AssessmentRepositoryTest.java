@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 
 @SpringBootTest
@@ -41,7 +43,8 @@ public class AssessmentRepositoryTest {
         assessment.setStep("2");
 
         // when
-        assessmentRepository.save(assessment);
+        Assessment assessmentSaveEntity = assessmentRepository.save(assessment);
+        assertEquals(assessment.getEstimator().getId(), assessmentSaveEntity.getEstimator().getId());
     }
 
     @Test
