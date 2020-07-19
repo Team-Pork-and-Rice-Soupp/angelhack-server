@@ -1,6 +1,7 @@
 package com.hackday.angelhack.document;
 
 import com.hackday.angelhack.document.dto.DocumentSaveRequestDto;
+import com.hackday.angelhack.websocket.Message;
 import com.hackday.angelhack.workspace.Workspace;
 import com.hackday.angelhack.workspace.WorkspaceRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +26,11 @@ public class DocumentService {
         document.setWorkspace(workspace);
 
         return documentRepository.save(document);
+    }
+
+    public void receiveMessage(Message message) {
+        Document document = documentRepository.findById(Long.valueOf(message.getDocumentId())).get();
+        document.setContent(message.getContent());
+        documentRepository.save(document);
     }
 }
